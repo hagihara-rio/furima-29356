@@ -28,9 +28,9 @@ RSpec.describe User, type: :model do
         expect(another_user.errors.full_messages).to include("Encrypted password is invalid")
       end
       it "メールアドレスに@を含むまなければ登録できない" do
-        @user.email = ""
+        @user.email = "12345abcde"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Email can't be blank")
+        expect(@user.errors.full_messages).to include("Email is invalid")
       end
       it "パスワードが空では登録できない" do
         @user.password = ""
@@ -67,7 +67,7 @@ RSpec.describe User, type: :model do
       it "ユーザー本名は全角（漢字・ひらがな・カタカナ）で入力しなければ登録できない" do
         @user.first_name = "aaa"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Encrypted password is invalid")
+        expect(@user.errors.full_messages).to include("First name is invalid")
       end
       it "カナのユーザー本名(苗字)が空だと登録できない" do
         @user.last_name_kana = ""
