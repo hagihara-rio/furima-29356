@@ -77,6 +77,11 @@
   align-items: flex-end;
 }
 
+.after-login {
+}
+
+.before-login {
+}
 
 .user-nickname {
   text-decoration: none;
@@ -102,3 +107,4 @@
   text-decoration: none;
   color: #333333;
 }
+
