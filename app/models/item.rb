@@ -1,6 +1,17 @@
 class Item < ApplicationRecord
 
-#  belongs_to :product
+    extend ActiveHash::Associations::ActiveRecordExtensions
+    belongs_to_active_hash :shipping_area
+
+
+
+
+    validates :shipping_area, presence: true
+    validates :genre_id, numericality: { other_than: 1 } 
+
+
+
+
   belongs_to :user
-  
+
 end
