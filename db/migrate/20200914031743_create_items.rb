@@ -10,7 +10,7 @@ class CreateItems < ActiveRecord::Migration[6.0]
 
       t.integer    :shipping_area_id,  null:false
        
-      t.integer    :shipping_days_id,  null:false
+      t.integer    :shipping_day_id,   null:false
       t.integer    :price,             null:false, limit: 7
       t.references :user,              null:false
 
