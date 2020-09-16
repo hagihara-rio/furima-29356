@@ -11,8 +11,18 @@ class ItemsController < ApplicationController
     @item = Item.new
   end
 
+
+#  データの保存に成功したら「root_path」へ、
+#  保存に失敗したら再度「new」のビューファイルがレンダリング
+#  されるように条件分岐しています。
+
   def create
     @item = Item.new(item_params)
+    if @item.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
 
