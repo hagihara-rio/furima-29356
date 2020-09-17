@@ -25,10 +25,25 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Itemname can't be blank")
       end
+      it "商品名が40文字以上の時登録できないこと" do
+        @item.itemname = "あああああああああああああああああああああああああああああああああああああああああ"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Itemname is too long (maximum is 40 characters)")
+      end
+      it "商品の説明が1000文字以上の時登録できないこと" do
+        @item.detail = "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Detail is too long (maximum is 1000 characters)")
+      end
       it "商品の説明が必須であること" do
         @item.detail = ""
         @item.valid?
         expect(@item.errors.full_messages).to include("Detail can't be blank")
+      end
+      it "カテゴリーの情報が1では登録できないこと" do
+        @item.category_id = "1"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category is not a number")
       end
       it "カテゴリーの情報が必須であること" do
         @item.category_id = ""
@@ -36,19 +51,39 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
       it "商品の状態についての情報が必須であること" do
+        @item.condition_id = "1"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition is not a number")
+      end
+      it "商品の状態についての情報が必須であること" do
         @item.condition_id = ""
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
+      end
+      it "配送料の負担についての情報が1では登録できないこと" do
+        @item.shipping_fee_id = "1"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping fee is not a number")
       end
       it "配送料の負担についての情報が必須であること" do
         @item.shipping_fee_id = ""
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping fee can't be blank")
       end
+      it "発送元の地域についての情報が1では登録できないこと" do
+        @item.shipping_area_id = "1"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping area is not a number")
+      end
       it "発送元の地域についての情報が必須であること" do
         @item.shipping_area_id = ""
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping area can't be blank")
+      end
+      it "発送までの日数についての情報が1では登録できないこと" do
+        @item.shipping_day_id = "1"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping day is not a number")
       end
       it "発送までの日数についての情報が必須であること" do
         @item.shipping_day_id = ""
