@@ -11,8 +11,7 @@ class Item < ApplicationRecord
 
     has_one_attached :image
 
-
-    validates :itemname, :detail, :category, :condition, :shipping_fee, :shipping_area, :shipping_day, :price, :user, presence: true
+    validates :itemname, :detail, :category, :condition, :shipping_fee, :shipping_area, :shipping_day, :price, :image, :user, presence: true
     validates :category_id, :condition_id, :shipping_fee_id, :shipping_area_id, :shipping_day_id, numericality: { other_than: 1 }
     validates :itemname, length: { maximum: 40 }
     validates :detail, length: { maximum: 1000 }
