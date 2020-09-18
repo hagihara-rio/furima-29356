@@ -1,8 +1,5 @@
 class ItemsController < ApplicationController
-
-
   before_action :authenticate_user!, except:[:index]
-
 
   def index
   end
@@ -10,7 +7,6 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new
   end
-
 
 #  データの保存に成功したら「root_path」へ、
 #  保存に失敗したら再度「new」のビューファイルがレンダリング
@@ -25,13 +21,10 @@ class ItemsController < ApplicationController
     end
   end
 
-
   private
-
 
   def item_params
     params.require(:item).permit(:itemname, :detail, :category_id, :condition_id, :shipping_fee_id, :shipping_area_id, :shipping_day_id, :price, :image).merge(user_id: current_user.id)
   end
-
 
 end
