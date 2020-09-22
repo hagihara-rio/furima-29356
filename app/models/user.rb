@@ -25,9 +25,9 @@ class User < ApplicationRecord
          validates :email, uniqueness: true
          validates :email, exclusion: { in: ["@"] }
          
-         validates :encrypted_password, presence: true
-         validates :encrypted_password, length: { minimum: 6 }
-         validates :encrypted_password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,100}+\z/i }
+         validates :password, presence: true
+         validates :password, length: { minimum: 6 }
+         validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,100}+\z/i }
 
   has_many :item
 
