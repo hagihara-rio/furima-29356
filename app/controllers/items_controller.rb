@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except:[:index, :show]
+  before_action :set_item, only:[:show, :edit, :update]
 
   def index
     @item = Item.all.order('created_at DESC')
@@ -12,7 +13,6 @@ class ItemsController < ApplicationController
 #  データの保存に成功したら「root_path」へ、
 #  保存に失敗したら再度「new」のビューファイルがレンダリング
 #  されるように条件分岐しています。
-
   def create
     @item = Item.new(item_params)
     if @item.save
@@ -23,22 +23,21 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    #  :set_item 済
   end
 
   def edit
-    @item = Item.find(params[:id])
+    #  :set_item 済
   end
 
   def update
-    item = Item.find(params[:id])
-    if item.update(item_params)
+    #  :set_item 済
+    if @item.update(item_params)
       redirect_to item_path
     else
-      render :new
+      render :edit
     end
   end
-
 
 #  def destroy
 #    item = Item.find(params[:id])
@@ -54,6 +53,10 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:itemname, :detail, :category_id, :condition_id, :shipping_fee_id, :shipping_area_id, :shipping_day_id, :price, :image).merge(user_id: current_user.id)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 
 end
