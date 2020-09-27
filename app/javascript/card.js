@@ -4,29 +4,29 @@ const pay = ()=> {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const formResult = document.getElementById("charge-form");
+    const formData = new FormData(formResult);
     const card = {
-      //card-number: formData.get("card-number"),
-      //card-exp-month: formData.get("card-exp-month"),
-      //card-exp-year: `20${formData.get("card-exp-year")}`,
-      //card-cvc: formData.get("card-cvc"),
-      //postal-code: formData.get("postal-code"),
-      //city: formData.get("city"),
-      //addresses: formData.get("addresses"),
-      //building: formData.get("building"),
-      //phone-number: formData.get("phone-number"),      
+      number: formData.get("card_number"),
+      exp_month: formData.get("ccard_exp_month"),
+      exp_year: `20${formData.get("card_exp_year")}`,
+      cvc: formData.get("card_cvc"),  
     };
 
-    Payjp.createToken(card, (status, response) => {
-      Payjp.createToken(card, (status, response) => {
+     Payjp.createToken(card, (status, response) => {
         if (status == 200) {
           const token = response.id;
           const renderDom = document.getElementById("charge-form");
           const tokenObj = `<input value=${token} type="hidden" name='token'>`;
           renderDom.insertAdjacentHTML("beforeend", tokenObj);
-        }
-        
-        document.getElementById("charge-form").submit();
-        document.getElementById("charge-form").reset();
+         }
+          document.getElementById("card-number").removeAttribute("name");
+          document.getElementById("card-exp-month").removeAttribute("name");
+          document.getElementById("card-exp-year").removeAttribute("name");
+          document.getElementById("card-cvc").removeAttribute("name");
+
+          document.getElementById("charge-form").submit();
+          document.getElementById("charge-form").reset();
       })
    })
 }

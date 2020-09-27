@@ -1,17 +1,17 @@
 class OrderAddress
 
   include ActiveModel::Model
-  attr_accessor :user, :item, :postal_code, :prefectures, :city, :address, :building_name, :phone_number, :order
+  attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :address, :building_name, :phone_number, :order_id
 
   with_options presence: true do
-    validates :user
-    validates :item
+    validates :user_id
+    validates :item_id
     validates :postal_code
-    validates :prefectures
+    validates :prefecture_id
     validates :city
     validates :address
     validates :phone_number
-    validates :order
+    validates :order_id
   end
 
   def save
