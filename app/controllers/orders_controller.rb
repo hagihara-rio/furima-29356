@@ -32,7 +32,7 @@ class OrdersController < ApplicationController
 
   def pay_item
     @item = Item.find(params[:item_id])
-    Payjp.api_key = "sk_test_8acf5c210875ce0e9b6af5b0"  # PAY.JPテスト秘密鍵
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]   # PAY.JPテスト秘密鍵
     Payjp::Charge.create(
       #amount: order_params[:price],  # 商品の値段
       amount: @item.price,           # 商品の値段
