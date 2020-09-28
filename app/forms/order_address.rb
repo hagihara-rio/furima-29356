@@ -1,22 +1,21 @@
 class OrderAddress
 
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :address, :building_name, :phone_number, :order_id
+  attr_accessor :token, :user_id, :item_id, :postal_code, :prefecture_id, :city, :address, :building_name, :phone_number, :order_id
 
   with_options presence: true do
     validates :user_id
     validates :item_id
-    validates :postal_code
-    validates :prefecture_id
+    validates :postal_code, exclusion: { in: ["-"] }
+    validates :prefecture_id,  numericality: { other_than: 1 }
     validates :city
     validates :address
-    validates :phone_number
-    validates :order_id
+    validates :phone_number, length: { maximum: 11 },numericality: { only_integer: true }
   end
 
   def save
-    order = Order.create(user: user, item: item)
-    Address.create(postal_code: postal_code, prefecture: prefecture, city: city, address: address, phone_number: phone_number,order: order)
+    order = Order.create(user_id: user_id, item_id: item_id)
+    Address.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, address: address, building_name: building_name, phone_number: phone_number,order_id: order.id)
   end
 
 end
