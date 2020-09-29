@@ -1,19 +1,23 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!
-  #before_action :move_to_top, except:[:index, :show]
+  before_action :set_item, only: [:index, :create, :pay_item, :move_to_top, :move_to_top2]
+  before_action :move_to_top, only:[:index]
+  before_action :move_to_top2, only:[:index]
 
   def new
   end
 
+  def show
+    @order = OrderAddress.new(order_params)
+  end
+
   def index
-   @item = Item.find(params[:item_id])
-   @order = OrderAddress.new
+    #  :set_item 済
+    @order = OrderAddress.new(order_params)
   end
 
   def create
-    @item = Item.find(params[:item_id])
+    #  :set_item 済
     @order = OrderAddress.new(order_params)
-    #binding.pry
     if @order.valid?
       pay_item
       @order.save
@@ -31,21 +35,31 @@ class OrdersController < ApplicationController
   end
 
   def pay_item
-    @item = Item.find(params[:item_id])
+    #  :set_item 済
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]   # PAY.JPテスト秘密鍵
     Payjp::Charge.create(
-      #amount: order_params[:price],  # 商品の値段
       amount: @item.price,           # 商品の値段
       card: order_params[:token],    # カードトークン
       currency:'jpy'                 # 通貨の種類(日本円)
     )
   end
 
-  def move_to_top
+  def set_item
     @item = Item.find(params[:item_id])
-    if current_user.id != @item
-       redirect_to root_path 
+  end
+
+  def move_to_top
+    #  :set_item 済
+    if user_signed_in? && current_user.id == @item.user_id
+      redirect_to root_path
+    end
+  end
+
+  def move_to_top2
+    if Order.exists?(item_id: @item.id)
+      redirect_to root_path
     end
   end
 
 end
+

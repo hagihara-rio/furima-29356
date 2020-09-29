@@ -11,6 +11,7 @@ class OrderAddress
     validates :city
     validates :address
     validates :phone_number, length: { maximum: 13 },numericality: { only_integer: true }
+    validates :token
   end
 
   def save
