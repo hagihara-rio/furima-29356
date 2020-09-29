@@ -3,8 +3,6 @@ class OrdersController < ApplicationController
   before_action :move_to_top, only:[:index]
   before_action :move_to_top2, only:[:index]
 
-  def new
-  end
 
   def show
     @order = OrderAddress.new(order_params)
