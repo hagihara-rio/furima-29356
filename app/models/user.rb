@@ -29,6 +29,7 @@ class User < ApplicationRecord
          validates :password, length: { minimum: 6 }
          validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,100}+\z/i }
 
-  has_many :item
+  has_many :items
+  has_many :orders
 
 end

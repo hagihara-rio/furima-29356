@@ -4,15 +4,13 @@ class ItemsController < ApplicationController
 
   def index
     @item = Item.all.order('created_at DESC')
+    @order = Order.new
   end
 
   def new
     @item = Item.new
   end
 
-#  データの保存に成功したら「root_path」へ、
-#  保存に失敗したら再度「new」のビューファイルがレンダリング
-#  されるように条件分岐しています。
   def create
     @item = Item.new(item_params)
     if @item.save
@@ -24,6 +22,7 @@ class ItemsController < ApplicationController
 
   def show
     #  :set_item 済
+    @order = Order.new
   end
 
   def edit
@@ -44,7 +43,7 @@ class ItemsController < ApplicationController
     if @item.destroy
       redirect_to root_path
     else
-      render :show
+      render :edit
     end
   end
 
